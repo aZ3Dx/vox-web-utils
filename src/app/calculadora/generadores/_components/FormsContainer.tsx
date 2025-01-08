@@ -14,6 +14,7 @@ import {
 import FormGens from "./FormGens";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const FormsContainer = () => {
   const searchParams = useSearchParams();
@@ -147,7 +148,7 @@ const FormsContainer = () => {
   };
 
   return (
-    <>
+    <Suspense>
       <form onSubmit={handleSubmit}>
         <Fieldset mt="md" radius="md" legend="Variables Generales">
           <Flex wrap="wrap" align="center" gap={16}>
@@ -334,7 +335,7 @@ const FormsContainer = () => {
           </Card> */}
         </>
       )}
-    </>
+    </Suspense>
   );
 };
 export default FormsContainer;
