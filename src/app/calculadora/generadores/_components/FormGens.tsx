@@ -8,10 +8,24 @@ interface FormGensProps {
   idUsuario: number;
   eliminar: () => void;
   total: number;
+  cantidadGensDefault: number;
+  infoGensPerGen?: string[];
 }
 
-const FormGens = ({ idUsuario, eliminar, total }: FormGensProps) => {
-  const [cantidadGens, setCantidadGens] = useState(1);
+const FormGens = ({
+  idUsuario,
+  eliminar,
+  total,
+  cantidadGensDefault,
+  infoGensPerGen,
+}: FormGensProps) => {
+  // TODO: infoGensPerUser
+  // const info = infoGensPerUser.split("-");
+  // const userId = info[0];
+  // const fieldId= info[1];
+  // const fieldValue = info[2];
+  // const [userId, fieldId, fieldValue] = infoGensPerGen.split("-");
+  const [cantidadGens, setCantidadGens] = useState(cantidadGensDefault ?? 1);
   return (
     <div style={{ minWidth: "22rem", position: "relative" }}>
       <Fieldset legend={`Usuario ${idUsuario}`} radius="md">
@@ -21,8 +35,13 @@ const FormGens = ({ idUsuario, eliminar, total }: FormGensProps) => {
             onClick={eliminar}
           />
         )}
-        {[...Array(cantidadGens).keys()].map((i) => (
-          <FieldGen key={i} idFieldset={i + 1} idUsuario={idUsuario} />
+        {[...Array(cantidadGens)].map((_, i) => (
+          <FieldGen
+            key={i}
+            idFieldset={i + 1}
+            idUsuario={idUsuario}
+            defaultValues={infoGensPerGen?.[i] ?? ""}
+          />
         ))}
         {cantidadGens > 1 && (
           <Button

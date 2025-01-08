@@ -18,20 +18,29 @@ import Image from "next/image";
 interface FieldGenProps {
   idFieldset: number;
   idUsuario: number;
+  defaultValues?: string;
 }
 
-const FieldGen = ({ idFieldset, idUsuario }: FieldGenProps) => {
+const FieldGen = ({ idFieldset, idUsuario, defaultValues }: FieldGenProps) => {
+  const [defaultCantidadGeneradores, defaultGeneradorId] =
+    defaultValues?.split("-") ?? [];
   const [opened, { open, close }] = useDisclosure(false);
   const [modalPage, setModalPage] = useState(1);
 
-  const [genSelected, setGenSelected] = useState<Generador>();
+  const [genSelected, setGenSelected] = useState<Generador>(
+    generadores[
+      generadores.findIndex(
+        (gen) => gen.id === parseInt(defaultGeneradorId ?? "")
+      )
+    ]
+  );
 
   return (
     <>
       <Fieldset legend={`Generador ${idFieldset}`}>
         <NumberInput
-          // name="cantidad_generadores"
           name={`${idUsuario}-${idFieldset}-cantidad_generadores`}
+          defaultValue={defaultCantidadGeneradores ?? ""}
           label="Cantidad de Generadores"
           placeholder="Ingrese la cantidad de generadores"
           min={1}
